@@ -1,25 +1,25 @@
-const { Name } = require('../models/models')
-const ApiError = require('../error/ApiError')
+import { Name } from '../models/models.js'
+import { ApiError } from '../exceptions/ApiError.js';
 
-class NameController {
-  async create(req, res, next) {
+
+  export  async function create(req, res, next) {
     try {
       const inputName = req.body.name || ''
       const rank = req.body.rank || ''
-      console.log("----------------------------------------", inputName)
-      const name = await Name.create({name : inputName, rank: rank})
+      console.log('----------------------------------------', inputName)
+      const name = await Name.create({ name: inputName, rank: rank })
       return res.json(name)
     } catch (error) {
       next(ApiError.badRequest(error.message))
     }
   }
 
-  async getAll(req, res) {
+  export async function getAll(req, res) {
     const names = await Name.findAll()
     return res.json(names)
   }
 
-  async delete(req, res) {
+  export async function _delete(req, res) {
     try {
       const id = req.params.id
       await Name.destroy({
@@ -31,7 +31,7 @@ class NameController {
     }
   }
 
-  async update(req, res) {
+  export async function update(req, res) {
     try {
       const id = req.params.id
       const { name, rank } = req.body
@@ -46,5 +46,6 @@ class NameController {
       next(ApiError.badRequest(error.message))
     }
   }
-}
-module.exports = new NameController()
+
+
+

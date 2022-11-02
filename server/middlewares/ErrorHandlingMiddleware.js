@@ -1,6 +1,6 @@
-const ApiError = require('../error/ApiError')
+import ApiError from '../error/ApiError'
 
-module.exports = function (err, req, res, next) {
+export default function (err, req, res, next) {
   if (err instanceof ApiError) {
     res.status(err.status).json({ message: err.message })
   }

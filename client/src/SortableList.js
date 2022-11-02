@@ -1,20 +1,21 @@
-import React from 'react';
-import SortableItem from './SortableItem';
-import { SortableContainer } from 'react-sortable-hoc';
+import React from 'react'
+import SortableItem from './SortableItem'
+import { SortableContainer } from 'react-sortable-hoc'
 
 const SortableList = (props) => {
   return (
-    <ul>
+    <ul className="wrapper">
       {props.items.map((value, index) => (
         <SortableItem
-         key={`item-${index}`}
-         index={index} 
-         name = {value} 
-         rank = {index + 1}
-          />
+          key={`item-${index}`}
+          index={index}
+          name={value}
+          rank={index + 1}
+          id={value.split(',')[1].split(' ')[2]}
+        />
       ))}
     </ul>
-  );
+  )
 }
 
-export default SortableContainer(SortableList);
+export default SortableContainer(SortableList)
