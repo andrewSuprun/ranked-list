@@ -1,50 +1,30 @@
-import { Name } from '../models/models.js'
-import { ApiError } from '../exceptions/ApiError.js';
+import { create, update, _delete, getAll, getOne } from '../services/nameService.js';
 
 
-  export  async function create(req, res, next) {
-    try {
-      const inputName = req.body.name || ''
-      const rank = req.body.rank || ''
-      console.log('----------------------------------------', inputName)
-      const name = await Name.create({ name: inputName, rank: rank })
+  export  async function createName(req, res) {
+      const name = await create(req, res);
       return res.json(name)
-    } catch (error) {
-      next(ApiError.badRequest(error.message))
-    }
+
   }
 
-  export async function getAll(req, res) {
-    const names = await Name.findAll()
+  export async function getAllNames(req, res) {
+    const names = await getAll(req, res)
     return res.json(names)
   }
 
-  export async function _delete(req, res) {
-    try {
-      const id = req.params.id
-      await Name.destroy({
-        where: { id },
-      })
-      res.sendStatus(204)
-    } catch (error) {
-      next(ApiError.badRequest(error.message))
-    }
+  export async function getOneName(req, res) {
+    const names = await getOne(req, res)
+    return res.json(names)
   }
 
-  export async function update(req, res) {
-    try {
-      const id = req.params.id
-      const { name, rank } = req.body
-      await Name.update(
-        { name, rank },
-        {
-          where: { id },
-        }
-      )
+  export function _deleteName(req, res) {
+      _delete (req, res)
       res.sendStatus(204)
-    } catch (error) {
-      next(ApiError.badRequest(error.message))
-    }
+  }
+
+  export async function updateName(req, res ) {
+      await update(req, res, )
+      res.sendStatus(204)
   }
 
 

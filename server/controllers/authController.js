@@ -65,7 +65,9 @@ async function activate(req, res, next) {
 
 async function login(req, res, next) {
   const { email, password } = req.body;
+
   const user = await userService.getByEmail(email);
+  console.log( await user, 'here is user from authController')
 
   if (!user) {
     throw ApiError.BadRequest('User with this email does not exist');
@@ -85,6 +87,7 @@ async function refresh(req, res, next) {
   const userData = jwtService.validateRefreshToken(refreshToken);
 
   if (!userData) {
+    'refresh anuthorized error from authContr line 90'
     throw ApiError.Unauthorized();
   }
 
@@ -116,6 +119,7 @@ async function sendAuthentication(res, user) {
   const userData = userService.normalize(user);
   const accessToken = jwtService.generateAccessToken(userData);
   const refreshToken = jwtService.generateRefreshToken(userData);
+  console.log(userData, accessToken, refreshToken, '<=senrAuthentification line 122')
 
   await tokenService.save(user.id, refreshToken);
 

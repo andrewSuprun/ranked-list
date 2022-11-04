@@ -20,6 +20,7 @@ export const User = sequelize.define('user', {
 export const Name = sequelize.define('name', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING },
+  rank: { type: DataTypes.INTEGER }
 })
 
 export const Token = sequelize.define('token', {
@@ -28,3 +29,6 @@ export const Token = sequelize.define('token', {
     allowNull: false,
   },
 })
+
+Token.belongsTo(User);
+User.hasOne(Token);

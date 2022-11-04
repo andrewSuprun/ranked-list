@@ -6,10 +6,11 @@ import { ApiError } from '../exceptions/ApiError.js';
 import { User } from '../models/models.js';
 
 function getAllActive() {
-  return User.findAll({
+  const users = User.findAll({
     where: { activationToken: null },
     order: ['id'],
   });
+  return users
 }
 
 function getByEmail(email) {

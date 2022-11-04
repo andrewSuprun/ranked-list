@@ -1,17 +1,22 @@
 import jwt from 'jsonwebtoken';
 
 function generateAccessToken(user) {
-  return jwt.sign(user, process.env.JWT_ACCESS_SECRET, { expiresIn: '5s' });
+  return jwt.sign(user, process.env.JWT_ACCESS_SECRET);
 }
 
 function generateRefreshToken(user) {
-  return jwt.sign(user, process.env.JWT_REFRESH_SECRET, { expiresIn: '30s' });
+  return jwt.sign(user, process.env.JWT_REFRESH_SECRET, { expiresIn: '1d' });
 }
 
 function validateAccessToken(token) {
   try {
-    return jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+
+    const isValid = jwt.verify(token, process.env.JWT_ACCESS_SECRET)
+    console.log('isValid',isValid)
+    return isValid;
   } catch (error) {
+    console.log('Token =>',token, 'Secret key =>', process.env.JWT_ACCESS_SECRET)
+    console.log('error jwt acces token', error)
     return null;
   }
 }
@@ -30,3 +35,4 @@ export const jwtService = {
   validateAccessToken,
   validateRefreshToken,
 };
+
