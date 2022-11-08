@@ -3,20 +3,30 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { emailService } from '../services/emailService.js';
 import { ApiError } from '../exceptions/ApiError.js';
-import { User } from '../models/models.js';
+import { Token, User } from '../models/models.js';
 
-function getAllActive() {
-  const users = User.findAll({
-    where: { activationToken: null },
-    order: ['id'],
-  });
-  return users
-}
+// function getAllActive() {
+//   const users = User.findAll({
+//     where: { activationToken: null },
+//     order: ['id'],
+//   });
+//   return users
+// }
 
 function getByEmail(email) {
   return User.findOne({
     where: { email },
   });
+}
+
+async function  getByToken() {
+  const user =  await User.findOne({
+    include: {
+      model: Token,
+      required: true
+    }
+  });
+  return normalize(user)
 }
 
 function normalize({ id, email }) {
@@ -45,9 +55,9 @@ async function register({ email, password }) {
 }
 
 export const userService = {
-  getAllActive,
   normalize,
-  getByEmail, 
+  getByEmail,
+  getByToken,
   register,
 };
 

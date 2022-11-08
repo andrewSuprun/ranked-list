@@ -32,3 +32,6 @@ export const Token = sequelize.define('token', {
 
 Token.belongsTo(User);
 User.hasOne(Token);
+
+Name.belongsTo(User);
+User.hasMany(Name);

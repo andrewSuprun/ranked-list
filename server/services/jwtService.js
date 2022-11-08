@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 function generateAccessToken(user) {
-  return jwt.sign(user, process.env.JWT_ACCESS_SECRET);
+  return jwt.sign(user, process.env.JWT_ACCESS_SECRET, {expiresIn: '120sec'});
 }
 
 function generateRefreshToken(user) {

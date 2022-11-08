@@ -1,11 +1,15 @@
-import { Name } from '../models/models.js'
+import { Name, User } from '../models/models.js'
 import { ApiError } from '../exceptions/ApiError.js'
+import { normalize } from '../helpers/normalize.js'
+import { userService } from '../services/userService.js';
+
 
 export async function create(req, res) {
   try {
     const { name, rank } = req.body
     console.log(name, rank)
-    const createdName = await Name.create({ name, rank })
+    const { id : userId } = await userService.getByToken()
+    const createdName = await Name.create({ name, rank, userId })
     console.log(name, '________________nameService create name')
     return createdName
   } catch (error) {
@@ -14,7 +18,13 @@ export async function create(req, res) {
 }
 
 export async function getAll() {
+  const { id : userId } = await userService.getByToken()
   const names = await Name.findAll({
+    where:{
+      userId
+    }
+  },
+    {
     order: [['rank', 'ASC']]
   })
   return names
