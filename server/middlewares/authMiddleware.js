@@ -3,7 +3,7 @@ import { jwtService } from '../services/jwtService.js';
 
 export function authMiddleware(req, res, next) {
   const authHeader = req.headers['authorization'];
-  console.log('==========authMidle', authHeader)
+
 
   if (!authHeader) {
     throw ApiError.Unauthorized();
@@ -16,10 +16,8 @@ export function authMiddleware(req, res, next) {
   }
 
   const userData = jwtService.validateAccessToken(accessToken);
-  console.log(userData)
 
   if (!userData) {
-    console.log('============= 22 line userData',userData)
     throw ApiError.Unauthorized();
   }
 

@@ -12,11 +12,8 @@ function validateAccessToken(token) {
   try {
 
     const isValid = jwt.verify(token, process.env.JWT_ACCESS_SECRET)
-    console.log('isValid',isValid)
     return isValid;
   } catch (error) {
-    console.log('Token =>',token, 'Secret key =>', process.env.JWT_ACCESS_SECRET)
-    console.log('error jwt acces token', error)
     return null;
   }
 }

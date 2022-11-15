@@ -67,7 +67,7 @@ async function login(req, res, next) {
   const { email, password } = req.body;
 
   const user = await userService.getByEmail(email);
-  console.log( await user, 'here is user from authController')
+
 
   if (!user) {
     throw ApiError.BadRequest('User with this email does not exist');
@@ -119,7 +119,6 @@ async function sendAuthentication(res, user) {
   const userData = userService.normalize(user);
   const accessToken = jwtService.generateAccessToken(userData);
   const refreshToken = jwtService.generateRefreshToken(userData);
-  console.log(userData, accessToken, refreshToken, '<=senrAuthentification line 122')
 
   await tokenService.save(user.id, refreshToken);
 

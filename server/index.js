@@ -35,4 +35,4 @@ const start = async () => {
 
 start()
 
-app.listen(PORT, () => console.log(`Ranked List app listening on port ${PORT}!`))
+app.listen(PORT)

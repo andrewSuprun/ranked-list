@@ -7,10 +7,8 @@ import { userService } from '../services/userService.js';
 export async function create(req, res) {
   try {
     const { name, rank } = req.body
-    console.log(name, rank)
     const { id : userId } = await userService.getByToken()
     const createdName = await Name.create({ name, rank, userId })
-    console.log(name, '________________nameService create name')
     return createdName
   } catch (error) {
     throw ApiError.BadRequest(error.message)
@@ -58,12 +56,30 @@ export async function update(req, res) {
   try {
     const id = req.params.id
     const { name, rank } = req.body
-    await Name.update(
+    const updatedName = await Name.update(
       { name, rank },
       {
         where: { id },
       }
     )
+    return updatedName
+  } catch (error) {
+    ApiError.BadRequest(error.message)
+  }
+}
+
+export async function updateMany(req, res) {
+  try {
+    const names = req.body
+    for (const name of names) {
+      const {rank, id} = name
+      await Name.update(
+        { rank },
+        {
+          where: { id },
+        }
+      )
+    }
   } catch (error) {
     ApiError.BadRequest(error.message)
   }

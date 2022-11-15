@@ -4,3 +4,4 @@ export const normalize = ( array ) =>{
   return {id, name, userId}
  })
 }
+

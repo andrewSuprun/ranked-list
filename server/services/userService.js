@@ -5,13 +5,6 @@ import { emailService } from '../services/emailService.js';
 import { ApiError } from '../exceptions/ApiError.js';
 import { Token, User } from '../models/models.js';
 
-// function getAllActive() {
-//   const users = User.findAll({
-//     where: { activationToken: null },
-//     order: ['id'],
-//   });
-//   return users
-// }
 
 function getByEmail(email) {
   return User.findOne({
